@@ -1,0 +1,30 @@
+# --- Entorno de Python ---
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# --- Salida de PyInstaller ---
+# Todo esto se regenera con build.ps1, no hace falta versionarlo.
+build/
+dist/
+*.spec
+
+# --- Diseño ---
+# Maquetas de la interfaz. Utiles para rediseñar, pero no hacen falta para
+# desarrollar ni compilar, asi que quedan fuera del repositorio.
+design/
+
+# --- Firma de codigo ---
+# Certificados personales: no son parte del proyecto.
+*.cer
+*.pfx
+*.p12
+
+# --- Sistema y editores ---
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
