@@ -80,11 +80,7 @@ contador quedaba trabado en el anterior.
 
 ## Publicar versiones (mantenedores)
 
-Las versiones siguen [versionado semántico](https://semver.org/lang/es/):
-`MAYOR.MENOR.PARCHE`. El proceso está en el
-[README](README.md#publicar-una-versión-nueva). El tag del release tiene que ser
-`vX.Y.Z` y el ejecutable adjunto tiene que llamarse exactamente
-`TubeDownloader.exe`, porque de eso depende la actualización automática.
+Está todo en [RELEASING.md](RELEASING.md).
 
 ## Licencia
 

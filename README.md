@@ -196,15 +196,8 @@ python -m venv venv
 
 ### Publicar una versión nueva
 
-1. Subí `APP_VERSION` en `app.py` (por ejemplo `"1.1.0"`). Es el único lugar donde
-   está la versión: `build.ps1` la copia a los metadatos del `.exe`.
-2. Compilá con `.\build.ps1`.
-3. En GitHub, creá un Release con el tag `v1.1.0` y adjuntá
-   `dist\TubeDownloader.exe` con ese nombre exacto. Lo que escribas en la
-   descripción se muestra en el aviso de actualización.
-
-Las instalaciones existentes lo detectan la próxima vez que se abren. Los releases
-marcados como borrador o pre-release se ignoran, así que sirven para probar.
+El proceso completo —número de versión, CHANGELOG, compilación, release y
+mantenimiento— está en [RELEASING.md](RELEASING.md).
 
 ### Firma de código (opcional)
 
@@ -254,6 +247,8 @@ versión anterior intacta.
 ├── build.ps1           Compila el ejecutable y lo firma si hay certificado
 ├── requirements.txt    Dependencias de Python
 ├── version_info.txt    Metadatos del ejecutable (lo completa build.ps1)
+├── CHANGELOG.md        Cambios de cada versión
+├── RELEASING.md        Cómo publicar una versión
 ├── assets/             Tipografía Space Grotesk y su licencia
 └── docs/               Capturas de pantalla
 ```
