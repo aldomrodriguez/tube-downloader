@@ -6,6 +6,8 @@
 
 **Videos de YouTube en la máxima calidad, listos para editar en Premiere Pro.**
 
+🇦🇷 **Español** · [🇬🇧 English](README.en.md)
+
 [![Última versión](https://img.shields.io/github/v/release/aldomrodriguez/tube-downloader?label=versi%C3%B3n&color=7c5cff)](https://github.com/aldomrodriguez/tube-downloader/releases/latest)
 [![Descargas](https://img.shields.io/github/downloads/aldomrodriguez/tube-downloader/total?label=descargas&color=7c5cff)](https://github.com/aldomrodriguez/tube-downloader/releases)
 [![Windows 10/11](https://img.shields.io/badge/Windows-10%20%7C%2011-2f333c)](#compatibilidad)
@@ -247,8 +249,8 @@ versión anterior intacta.
 ├── build.ps1           Compila el ejecutable y lo firma si hay certificado
 ├── requirements.txt    Dependencias de Python
 ├── version_info.txt    Metadatos del ejecutable (lo completa build.ps1)
-├── CHANGELOG.md        Cambios de cada versión
-├── RELEASING.md        Cómo publicar una versión
+├── CHANGELOG.md        Cambios de cada versión (también en inglés: CHANGELOG.en.md)
+├── RELEASING.md        Cómo publicar una versión (también en inglés: RELEASING.en.md)
 ├── assets/             Tipografía Space Grotesk y su licencia
 └── docs/               Capturas de pantalla
 ```
@@ -261,6 +263,8 @@ versión anterior intacta.
 - 🐛 ¿Encontraste un error? [Reportalo](https://github.com/aldomrodriguez/tube-downloader/issues/new?template=reporte-de-error.yml).
 - 💡 ¿Tenés una idea? [Proponela](https://github.com/aldomrodriguez/tube-downloader/issues/new?template=sugerencia.yml).
 - 🔒 ¿Encontraste un problema de seguridad? Seguí la [política de seguridad](SECURITY.md); no lo publiques en un issue.
+
+Podés escribir issues y pull requests en español o en inglés. La documentación completa está también [en inglés](README.en.md).
 
 ## Licencia
 

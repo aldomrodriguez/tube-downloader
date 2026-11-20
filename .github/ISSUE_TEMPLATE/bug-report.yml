@@ -1,0 +1,63 @@
+name: 🐛 Bug report (English)
+description: Something isn't working as it should.
+labels: ["error"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting it! Before going on, open the app with an internet
+        connection and accept the update if it offers one: many download errors come
+        from YouTube changes that are already fixed.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Shown at the bottom left of the app (for example, v1.0.0).
+      placeholder: v1.0.0
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Video link
+      description: If the video is public. If it isn't, say what kind of video it was (Short, livestream, playlist, 4K, etc.).
+      placeholder: https://www.youtube.com/watch?v=...
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you did, what you expected to happen and what happened instead. Copy the error message exactly as shown (it's in Spanish).
+    validations:
+      required: true
+  - type: dropdown
+    id: system
+    attributes:
+      label: Operating system
+      options:
+        - Windows 11
+        - Windows 10
+    validations:
+      required: true
+  - type: dropdown
+    id: gpu
+    attributes:
+      label: Graphics card
+      description: The one the app shows at the top right.
+      options:
+        - NVIDIA
+        - Intel
+        - AMD
+        - CPU (no compatible card)
+        - I don't know
+  - type: dropdown
+    id: codec
+    attributes:
+      label: Codec selected
+      options:
+        - H.264
+        - H.265
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If they help explain the problem, drag them here.

@@ -1,9 +1,13 @@
 # Cómo contribuir
 
+🇦🇷 **Español** · [🇬🇧 English](CONTRIBUTING.en.md)
+
 ¡Gracias por querer sumarte! Esta guía explica cómo reportar problemas, proponer
 ideas y mandar cambios para que lleguen rápido a una versión publicada.
 
 Al participar aceptás el [código de conducta](CODE_OF_CONDUCT.md).
+
+Podés escribir issues y pull requests en español o en inglés.
 
 ## Reportar un error
 

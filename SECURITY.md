@@ -1,5 +1,7 @@
 # Política de seguridad
 
+🇦🇷 **Español** · [🇬🇧 English](SECURITY.en.md)
+
 ## Versiones con soporte
 
 Solo la última versión publicada en

@@ -1,5 +1,7 @@
 # Código de conducta
 
+🇦🇷 **Español** · [🇬🇧 English](CODE_OF_CONDUCT.en.md)
+
 ## Nuestro compromiso
 
 Queremos que participar en este proyecto sea una experiencia respetuosa y libre de

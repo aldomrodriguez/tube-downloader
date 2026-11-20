@@ -1,0 +1,21 @@
+name: 💡 Feature request (English)
+description: An idea to improve the app.
+labels: ["mejora"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would it solve
+      description: Describe the situation where you miss it. E.g. "When I download interviews I only need the audio and I have to convert it separately".
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: How you imagine it
+      description: How it should work from your point of view.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What you do today instead
+      description: Other tools or steps you use to get it done.

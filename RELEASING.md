@@ -1,5 +1,7 @@
 # Cómo publicar una versión
 
+🇦🇷 **Español** · [🇬🇧 English](RELEASING.en.md)
+
 Guía para mantenedores. Cada versión publicada en
 [Releases](https://github.com/aldomrodriguez/tube-downloader/releases) les llega a
 todos los usuarios por la actualización automática, así que este proceso es lo único
@@ -19,8 +21,9 @@ que hace falta para distribuir un cambio.
    Es el único lugar donde está la versión: `build.ps1` la copia a los metadatos
    del `.exe` y el actualizador la compara con el tag del release.
 
-3. **Anotá los cambios** en [`CHANGELOG.md`](CHANGELOG.md), arriba de todo, con la
-   fecha y el enlace al final del archivo:
+3. **Anotá los cambios** en [`CHANGELOG.md`](CHANGELOG.md) **y en
+   [`CHANGELOG.en.md`](CHANGELOG.en.md)**, arriba de todo, con la fecha y el enlace al
+   final del archivo:
 
    ```markdown
    ## [1.0.1] — 2026-12-05

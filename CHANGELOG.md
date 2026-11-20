@@ -1,5 +1,7 @@
 # Cambios
 
+🇦🇷 **Español** · [🇬🇧 English](CHANGELOG.en.md)
+
 Todas las versiones publicadas, de la más nueva a la más vieja. El formato sigue
 [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y las versiones,
 [versionado semántico](https://semver.org/lang/es/).
