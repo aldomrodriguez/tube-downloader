@@ -1,0 +1,21 @@
+name: 💡 Sugerencia
+description: Una idea para mejorar la aplicación.
+labels: ["mejora"]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: Qué problema resolvería
+      description: Contá la situación en la que la extrañás. Ej. "Cuando bajo entrevistas solo necesito el audio y tengo que convertirlo aparte".
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Cómo te lo imaginás
+      description: Cómo debería funcionar desde tu punto de vista.
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Qué hacés hoy en su lugar
+      description: Otras herramientas o pasos que usás para resolverlo.

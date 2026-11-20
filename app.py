@@ -1104,7 +1104,7 @@ class DownloaderApp:
                      text_color=TEXT).pack(side="left", padx=(13, 0))
 
         ctk.CTkLabel(card, text=body, font=font(13), text_color=MUTED,
-                     wraplength=330, justify="left").pack(
+                     wraplength=300, justify="left").pack(
             fill="x", padx=22, pady=(15, 0))
 
         result = {"ok": False}

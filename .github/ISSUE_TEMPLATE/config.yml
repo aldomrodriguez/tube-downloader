@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🔒 Reportar un problema de seguridad
+    url: https://github.com/aldomrodriguez/tube-downloader/security/advisories/new
+    about: En privado, para no exponer a otros usuarios mientras se corrige.
+  - name: ⬇ Descargar la última versión
+    url: https://github.com/aldomrodriguez/tube-downloader/releases/latest
+    about: Muchos errores ya están resueltos en la versión más nueva.

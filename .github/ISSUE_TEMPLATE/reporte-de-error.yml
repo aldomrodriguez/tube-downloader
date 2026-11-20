@@ -1,0 +1,63 @@
+name: 🐛 Reporte de error
+description: Algo no funciona como debería.
+labels: ["error"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ¡Gracias por reportarlo! Antes de seguir, abrí la aplicación con internet y
+        aceptá la actualización si te la ofrece: muchos errores de descarga se deben
+        a cambios de YouTube que ya están resueltos.
+  - type: input
+    id: version
+    attributes:
+      label: Versión
+      description: Aparece abajo a la izquierda en la aplicación (por ejemplo, v1.0.0).
+      placeholder: v1.0.0
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Link del video
+      description: Si el video es público. Si no lo es, contá qué tipo de video era (Short, transmisión, playlist, 4K, etc.).
+      placeholder: https://www.youtube.com/watch?v=...
+  - type: textarea
+    id: que-paso
+    attributes:
+      label: Qué pasó
+      description: Qué hiciste, qué esperabas que pasara y qué pasó en cambio. Copiá el mensaje de error tal cual.
+    validations:
+      required: true
+  - type: dropdown
+    id: sistema
+    attributes:
+      label: Sistema operativo
+      options:
+        - Windows 11
+        - Windows 10
+    validations:
+      required: true
+  - type: dropdown
+    id: placa
+    attributes:
+      label: Placa de video
+      description: La que muestra la aplicación arriba a la derecha.
+      options:
+        - NVIDIA
+        - Intel
+        - AMD
+        - CPU (sin placa compatible)
+        - No sé
+  - type: dropdown
+    id: codec
+    attributes:
+      label: Códec elegido
+      options:
+        - H.264
+        - H.265
+  - type: textarea
+    id: capturas
+    attributes:
+      label: Capturas
+      description: Si ayudan a entender el problema, arrastralas acá.
