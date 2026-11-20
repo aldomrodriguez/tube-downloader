@@ -49,10 +49,14 @@ que hace falta para distribuir un cambio.
 
 6. **Publicá el release** con [GitHub CLI](https://cli.github.com/):
 
+   Escribí las notas en un archivo (por ejemplo `notas.md`, guardado en UTF-8) y
+   pasalo con `--notes-file`. Escribirlas directo en el comando con `--notes` puede
+   romper los acentos según la consola, y así se verían en el aviso de la app.
+
    ```powershell
    gh release create v1.0.1 dist\TubeDownloader.exe `
      --title "Tube Downloader 1.0.1" `
-     --notes "- Corrige la descarga de Shorts."
+     --notes-file notas.md
    ```
 
    O desde la web: **Releases → Draft a new release**, tag `v1.0.1`, y adjuntar
