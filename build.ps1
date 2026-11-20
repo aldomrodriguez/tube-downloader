@@ -13,6 +13,11 @@ $venvPython = "$root\venv\Scripts\python.exe"
 Write-Host "Instalando dependencias..."
 & $venvPython -m pip install --upgrade pip
 & $venvPython -m pip install -r requirements.txt
+# pip no actualiza lo que ya esta instalado, y yt-dlp es lo unico que tiene que
+# ir siempre al dia: YouTube cambia seguido y una version vieja deja de bajar.
+& $venvPython -m pip install --upgrade yt-dlp
+$ytdlp = & $venvPython -c "import yt_dlp.version as v; print(v.__version__)"
+Write-Host "yt-dlp: $ytdlp"
 
 Write-Host "Localizando ffmpeg embebido..."
 $ffmpegPath = & $venvPython -c "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())"

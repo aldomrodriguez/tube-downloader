@@ -18,7 +18,7 @@ import updater
 
 # Single source of truth for the version: build.ps1 copies it into the .exe
 # metadata, and the updater compares it with the latest GitHub release tag.
-APP_VERSION = "1.0.0"
+APP_VERSION = "1.0.1"
 APP_NAME = "TubeDownloader"
 _APPDATA = Path(os.environ.get("APPDATA", str(Path.home())))
 CONFIG_DIR = _APPDATA / APP_NAME

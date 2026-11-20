@@ -4,6 +4,11 @@ Todas las versiones publicadas, de la más nueva a la más vieja. El formato sig
 [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y las versiones,
 [versionado semántico](https://semver.org/lang/es/).
 
+## [1.0.1] — 2026-11-20
+
+- yt-dlp actualizado a 2026.10.26 para seguir los cambios de YouTube.
+- Las compilaciones ahora usan siempre la última versión de yt-dlp.
+
 ## [1.0.0] — 2026-11-20
 
 Primera versión pública.
@@ -16,4 +21,5 @@ Primera versión pública.
 - Progreso real con velocidad, tiempo restante y botón para detener.
 - Actualización automática: avisa cuando hay una versión nueva y se instala sola.
 
+[1.0.1]: https://github.com/aldomrodriguez/tube-downloader/releases/tag/v1.0.1
 [1.0.0]: https://github.com/aldomrodriguez/tube-downloader/releases/tag/v1.0.0
