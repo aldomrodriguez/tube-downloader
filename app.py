@@ -13,7 +13,12 @@ import yt_dlp
 import imageio_ffmpeg
 from yt_dlp.utils import DownloadCancelled
 
+import updater
 
+
+# Single source of truth for the version: build.ps1 copies it into the .exe
+# metadata, and the updater compares it with the latest GitHub release tag.
+APP_VERSION = "1.0.0"
 APP_NAME = "TubeDownloader"
 _APPDATA = Path(os.environ.get("APPDATA", str(Path.home())))
 CONFIG_DIR = _APPDATA / APP_NAME
@@ -540,7 +545,8 @@ class DownloaderApp:
     def _build_footer(self, parent):
         row = ctk.CTkFrame(parent, fg_color="transparent")
         row.pack(fill="x", padx=4, pady=(12, 0))
-        ctk.CTkLabel(row, text="Desarrollado por Aldo Rodriguez", font=font(11),
+        ctk.CTkLabel(row, text=f"Desarrollado por Aldo Rodriguez · v{APP_VERSION}",
+                     font=font(11),
                      text_color=FOOTER).pack(side="left")
         link = ctk.CTkLabel(row, text="aldorodriguez.com.ar", font=font(11),
                             text_color=DIM, cursor="hand2")
@@ -1059,8 +1065,14 @@ class DownloaderApp:
 
     # ---------------------------------------------------------------- close
 
-    def _ask(self, title, body, ok_text, cancel_text, destructive=False):
-        """Themed modal question. Returns True when the user picks the ok action."""
+    def _ask(self, title, body, ok_text, cancel_text, destructive=False,
+             ok_primary=False):
+        """Themed modal question. Returns True when the user picks the ok action.
+
+        By default the safe choice (cancel) is the highlighted button; with
+        ok_primary the ok action is highlighted and an info icon replaces the
+        warning one — for offers like an update rather than a risky action.
+        """
         dlg = ctk.CTkToplevel(self.root)
         dlg.title(title)
         dlg.configure(fg_color=BG)
@@ -1077,10 +1089,17 @@ class DownloaderApp:
         icon = ctk.CTkCanvas(head, width=40, height=40, bg=CARD,
                              highlightthickness=0, bd=0)
         icon.pack(side="left")
-        icon.create_oval(0, 0, 40, 40, fill="#3a3020", outline="#3a3020")
-        icon.create_polygon(20, 10, 31, 29, 9, 29, fill="", outline=WARN, width=2)
-        icon.create_line(20, 16, 20, 22, fill=WARN, width=2, capstyle="round")
-        icon.create_line(20, 25, 20, 25, fill=WARN, width=2, capstyle="round")
+        if ok_primary:
+            icon.create_oval(0, 0, 40, 40, fill="#2a2440", outline="#2a2440")
+            icon.create_line(20, 11, 20, 25, fill=ACCENT, width=2, capstyle="round")
+            icon.create_line(14, 19, 20, 25, 26, 19, fill=ACCENT, width=2,
+                             capstyle="round", joinstyle="round")
+            icon.create_line(13, 29, 27, 29, fill=ACCENT, width=2, capstyle="round")
+        else:
+            icon.create_oval(0, 0, 40, 40, fill="#3a3020", outline="#3a3020")
+            icon.create_polygon(20, 10, 31, 29, 9, 29, fill="", outline=WARN, width=2)
+            icon.create_line(20, 16, 20, 22, fill=WARN, width=2, capstyle="round")
+            icon.create_line(20, 25, 20, 25, fill=WARN, width=2, capstyle="round")
         ctk.CTkLabel(head, text=title, font=font(16, "bold"),
                      text_color=TEXT).pack(side="left", padx=(13, 0))
 
@@ -1097,15 +1116,20 @@ class DownloaderApp:
 
         btns = ctk.CTkFrame(card, fg_color="transparent")
         btns.pack(fill="x", padx=22, pady=(18, 22))
-        ctk.CTkButton(btns, text=cancel_text, font=font(13, "bold"), height=40,
+        primary = (ok_text, True) if ok_primary else (cancel_text, False)
+        secondary = (cancel_text, False) if ok_primary else (ok_text, True)
+        ctk.CTkButton(btns, text=primary[0], font=font(13, "bold"), height=40,
                       corner_radius=10, fg_color=ACCENT, hover_color=ACCENT_HOVER,
-                      text_color=BG, command=lambda: choose(False)).pack(fill="x")
-        ctk.CTkButton(btns, text=ok_text, font=font(13), height=40, corner_radius=10,
-                      fg_color="transparent", hover_color="#2a1f22",
+                      text_color=BG,
+                      command=lambda v=primary[1]: choose(v)).pack(fill="x")
+        ctk.CTkButton(btns, text=secondary[0], font=font(13), height=40,
+                      corner_radius=10, fg_color="transparent",
+                      hover_color="#2a1f22" if destructive else "#2b2f38",
                       border_color="#4a3236" if destructive else CHIP_BORDER,
                       border_width=1,
                       text_color="#f28b8b" if destructive else TEXT_SOFT,
-                      command=lambda: choose(True)).pack(fill="x", pady=(8, 0))
+                      command=lambda v=secondary[1]: choose(v)).pack(
+            fill="x", pady=(8, 0))
 
         dlg.update_idletasks()
         w, h = 392, dlg.winfo_reqheight()
@@ -1147,6 +1171,91 @@ class DownloaderApp:
             return
         self.root.after(200, lambda: self._wait_and_close(attempts - 1))
 
+    # --------------------------------------------------------------- update
+
+    def check_for_update(self):
+        """Ask GitHub for a newer release off the UI thread; silent if offline."""
+        if not updater.can_self_update():
+            return
+
+        def run():
+            info = updater.check_latest(APP_VERSION)
+            if info:
+                self.root.after(0, lambda: self._offer_update(info))
+        threading.Thread(target=run, daemon=True).start()
+
+    def _offer_update(self, info):
+        # Never interrupt a download in progress: offer it once it's over.
+        if self.is_downloading:
+            self.root.after(3000, lambda: self._offer_update(info))
+            return
+
+        body = (f"Está disponible la versión {info['version']} (tenés la "
+                f"{APP_VERSION}). Se descarga y la aplicación se reinicia sola.")
+        notes = info["notes"]
+        if notes:
+            if len(notes) > 280:
+                notes = notes[:280].rstrip() + "…"
+            body += "\n\n" + notes
+        if self._ask("Hay una actualización", body, "Actualizar ahora", "Más tarde",
+                     ok_primary=True):
+            self._start_update(info)
+
+    def _start_update(self, info):
+        # Reuses the download state: it locks the controls, turns the second
+        # button into Detener and makes closing the window ask first.
+        self.is_downloading = True
+        self.cancel_requested = False
+        self._chips_key = None
+        self._lock_actions("Actualizando…")
+        self.ring.reset(0)
+        self.show_working("Descargando actualización",
+                          f"Tube Downloader {info['version']}", percent=0)
+        threading.Thread(target=self._update_worker, args=(info,), daemon=True).start()
+
+    def _update_worker(self, info):
+        name = f"Tube Downloader {info['version']}"
+
+        def progress(done, total):
+            sub = f"{format_size(done)} de {format_size(total)}"
+            pct = done * 100 / total
+            self.root.after(0, lambda: self.show_working(
+                "Descargando actualización", name, sub, percent=pct))
+
+        try:
+            path = updater.download(info, progress, lambda: self.cancel_requested)
+        except InterruptedError:
+            self.root.after(0, self._on_cancelled)
+            return
+        except Exception as e:
+            msg = f"No se pudo actualizar: {e}"
+            self.root.after(0, lambda: self._on_update_failed(msg))
+            return
+        self.root.after(0, lambda: self._install_update(path, name))
+
+    def _install_update(self, path, name):
+        if self.cancel_requested:
+            try:
+                os.remove(path)
+            except OSError:
+                pass
+            self._on_cancelled()
+            return
+        self.show_working("Reiniciando", name, "La aplicación se abre de nuevo sola.",
+                          percent=100)
+        try:
+            updater.install_and_restart(path)
+        except OSError as e:
+            self._on_update_failed(f"No se pudo instalar la actualización: {e}")
+            return
+        self.is_downloading = False
+        # The swap script waits for this process to exit before replacing the exe.
+        self.root.after(400, self.root.destroy)
+
+    def _on_update_failed(self, message):
+        self.is_downloading = False
+        self.show_error(message + "\nPodés seguir usando esta versión.")
+
 
 def probe_encoder_async(app):
     """Warm the encoder probe off the UI thread so the pill shows the real device."""
@@ -1165,6 +1274,8 @@ def main():
     setup_font()
     app = DownloaderApp(root)
     probe_encoder_async(app)
+    # A short delay so the window is up before a possible update dialog.
+    root.after(1500, app.check_for_update)
     root.mainloop()
 
 

@@ -49,6 +49,16 @@ das a Descargar.
 
 La carpeta de destino y el códec quedan guardados para la próxima vez.
 
+### Actualizaciones
+
+Al abrirse, la aplicación consulta si hay una versión nueva en Releases. Si la hay,
+ofrece actualizar: descarga el nuevo `.exe`, verifica que coincida con el publicado
+y se reinicia sola ya actualizada. Si no hay internet, no pregunta nada y sigue
+funcionando normal. Nunca interrumpe una descarga en curso.
+
+Conviene actualizar seguido: YouTube cambia a menudo y cada versión trae un yt-dlp
+al día.
+
 ## Compilar desde el código
 
 Necesitás Python 3.11 o superior.
@@ -69,6 +79,18 @@ python -m venv venv
 .\venv\Scripts\python.exe -m pip install -r requirements.txt
 .\venv\Scripts\python.exe app.py
 ```
+
+### Publicar una versión nueva
+
+1. Subí `APP_VERSION` en `app.py` (por ejemplo `"1.1.0"`). Es el único lugar donde
+   está la versión: `build.ps1` la copia a los metadatos del `.exe`.
+2. Compilá con `.\build.ps1`.
+3. En GitHub, creá un Release con el tag `v1.1.0` y adjuntá
+   `dist\TubeDownloader.exe` con ese nombre exacto. Lo que escribas en la
+   descripción se muestra en el aviso de actualización.
+
+Las instalaciones existentes lo detectan la próxima vez que se abren. Los releases
+marcados como borrador o pre-release se ignoran, así que sirven para probar.
 
 ### Firma de código (opcional)
 
@@ -108,6 +130,7 @@ verdad.
 
 ```
 ├── app.py              La aplicación (interfaz y lógica de descarga)
+├── updater.py          Busca, descarga e instala actualizaciones desde Releases
 ├── build.ps1           Compila el ejecutable y lo firma si hay certificado
 ├── requirements.txt    Dependencias de Python
 ├── version_info.txt    Metadatos del ejecutable (autor, versión)

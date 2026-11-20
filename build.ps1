@@ -18,6 +18,20 @@ Write-Host "Localizando ffmpeg embebido..."
 $ffmpegPath = & $venvPython -c "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())"
 Write-Host "ffmpeg: $ffmpegPath"
 
+# La version vive solo en app.py (APP_VERSION); aca se copia a los metadatos
+# del exe para que Windows muestre la misma que compara el actualizador.
+$m = Select-String -Path "$root\app.py" -Pattern '^APP_VERSION\s*=\s*"(\d+)\.(\d+)\.(\d+)"'
+if (-not $m) { throw "No se encontro APP_VERSION en app.py" }
+$v = $m.Matches[0].Groups
+$verTuple = "($($v[1]), $($v[2]), $($v[3]), 0)"
+$verText = "$($v[1]).$($v[2]).$($v[3]).0"
+Write-Host "Version: $verText"
+$info = Get-Content "$root\version_info.txt" -Raw
+$info = $info -replace 'filevers=\([^)]*\)', "filevers=$verTuple" `
+              -replace 'prodvers=\([^)]*\)', "prodvers=$verTuple" `
+              -replace "(u'(?:File|Product)Version', u')[^']*'", "`${1}$verText'"
+[System.IO.File]::WriteAllText("$root\version_info.txt", $info)
+
 Write-Host "Generando ejecutable con PyInstaller..."
 & $venvPython -m PyInstaller --onefile --windowed --name "TubeDownloader" `
   --add-binary "$ffmpegPath;." `
